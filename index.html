@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal Experience</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+color: #fff;
+overflow: hidden;
+padding: 20px;
+}
+
+.card {
+background: rgba(255, 255, 255, 0.15);
+backdrop-filter: blur(10px);
+padding: 40px;
+border-radius: 20px;
+box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+border: 1px solid rgba(255, 255, 255, 0.2);
+text-align: center;
+max-width: 500px;
+width: 100%;
+transition: all 0.3s ease;
+}
+
+.from-tag {
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+margin-bottom: 10px;
+opacity: 0.8;
+}
+
+h1 {
+font-size: 2.5rem;
+margin-bottom: 15px;
+font-weight: 700;
+}
+
+.subtitle {
+font-size: 1.2rem;
+margin-bottom: 30px;
+font-style: italic;
+}
+
+.btn-container {
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 20px;
+height: 80px;
+}
+
+button {
+padding: 12px 35px;
+font-size: 1.1rem;
+font-weight: 600;
+border: none;
+border-radius: 50px;
+cursor: pointer;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+outline: none;
+}
+
+#yesBtn {
+background-color: #fff;
+color: #f5576c;
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#yesBtn:hover {
+transform: scale(1.1);
+box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+#noBtn {
+background-color: rgba(0, 0, 0, 0.4);
+color: #fff;
+position: absolute; /* Needed for the evasive movement */
+transition: all 0.2s ease;
+z-index: 10;
+}
+
+.success-view {
+display: none;
+}
+
+.success-view h2 {
+font-size: 2.2rem;
+margin-bottom: 20px;
+}
+
+.gif-placeholder {
+width: 200px;
+height: 200px;
+margin: 20px auto;
+border-radius: 15px;
+background-color: rgba(255,255,255,0.2);
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 0.9rem;
+overflow: hidden;
+}
+
+.gif-placeholder img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="questionCard">
+<div class="from-tag">From: Your Name</div>
+<h1>Will you forever be mine?</h1>
+<p class="subtitle">Her Name ❤️</p>
+
+<div class="btn-container">
+<button id="yesBtn">Yes ❤️</button>
+<button id="noBtn">No 🥺</button>
+</div>
+</div>
+
+<div class="card success-view" id="successCard">
+<h2>Yay! I knew you'd say YES! 💖</h2>
+<p>You're the most amazing person I know. I love you endlessly.</p>
+
+<div class="gif-placeholder">
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3VwZ3c4c3pnd214Z3V5bms5cXo5OHp5azh4N3R5Zmt5d2RyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/K1wjOn6HrfbQA/giphy.gif" alt="Happy Cat">
+</div>
+
+<div class="from-tag">- Your Name</div>
+</div>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const questionCard = document.getElementById('questionCard');
+const successCard = document.getElementById('successCard');
+
+// Setting initial position for the No button so it moves relative to container
+noBtn.style.left = 'calc(50% + 40px)';
+
+// 1. Make the "No" button run away when hovered or touched
+function moveNoButton() {
+// Get boundaries of the browser window to avoid throwing it off-screen
+const padding = 50;
+const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+// Generate random coordinates anywhere on the screen
+const randomX = Math.floor(Math.random() * maxX);
+const randomY = Math.floor(Math.random() * maxY);
+
+// Detach button visually from the card container to float anywhere on screen
+noBtn.style.position = 'fixed';
+noBtn.style.left = randomX + 'px';
+noBtn.style.top = randomY + 'px';
+
+// Optional flavor: make the "Yes" button get slightly larger each time they try to hit No
+const currentScale = yesBtn.style.transform ? parseFloat(yesBtn.style.transform.replace('scale(', '')) : 1;
+if (currentScale < 2) {
+yesBtn.style.transform = scale(${currentScale + 0.1});
+}
+}
+
+noBtn.addEventListener('mouseover', moveNoButton);
+noBtn.addEventListener('touchstart', (e) => {
+e.preventDefault(); // Prevents accidental click registers on mobile
+moveNoButton();
+});
+
+// 2. What happens when they click "Yes"
+yesBtn.addEventListener('click', () => {
+questionCard.style.display = 'none';
+successCard.style.display = 'block';
+});
+</script>
+</body>
+</html>
